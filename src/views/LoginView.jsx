@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+
+import { AuthContext } from '../contexts/authContext'
+import { types } from '../types'
 
 //history es para las herramientas de react router dom
 const LoginView = ({history}) => {
+
+  const { dispatch } = useContext(AuthContext)
 
   const handleClick = () =>{
     
@@ -9,7 +15,19 @@ const LoginView = ({history}) => {
     // history.push('/')
 
     //esto lo que hace para que login no este en las historia del navegador es decir que si voy para atras no vea el login
-    history.replace('/')
+    
+    const path = localStorage.getItem('lastPath') || '/'
+    const payload={
+      name:'Adrian'
+    }
+
+    dispatch({
+      type: types.login,
+      payload
+    })
+
+    history.replace(path)
+
   }
 
   return (
